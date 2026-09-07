@@ -1,0 +1,39 @@
+{
+  "name": "mcp-google-server",
+  "version": "1.0.0",
+  "description": "A generic MCP server that lets MCP-compatible AI agents draft/send Gmail emails and append content to Google Docs.",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "dev:http": "tsx src/server-http.ts",
+    "start": "node dist/index.js",
+    "start:http": "node dist/server-http.js",
+    "auth": "tsx src/scripts/authorize.ts",
+    "smoke": "tsx src/scripts/smoke-test.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.3",
+    "dotenv": "^16.4.7",
+    "express": "^5.2.1",
+    "googleapis": "^148.0.0",
+    "pino": "^9.6.0",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.15.21",
+    "@vitest/coverage-v8": "^3.2.3",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

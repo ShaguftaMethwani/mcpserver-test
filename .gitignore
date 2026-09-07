@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment variables — NEVER commit real credentials
+.env
+.env.local
+.env.*.local
+
+# Google OAuth credentials and tokens — contain sensitive secrets
+credentials.json
+
+# OAuth tokens — contain sensitive access/refresh tokens
+tokens.json
+*.tokens.json
+
+# Logs
+logs/
+*.log
+
+# macOS
+.DS_Store
+
+# Editor directories
+.vscode/
+.idea/
+
+# Coverage reports
+coverage/
+
+# Railway
+.railway/
