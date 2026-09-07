@@ -32,11 +32,6 @@ async function main(): Promise<void> {
   const app = express();
   app.use(express.json());
 
-  // Create a single shared MCP server instance.
-  // All stateless tool calls share this instance — safe because the MCP server
-  // itself is stateless (it delegates to services which hold no per-request state).
-  const mcpServer = createMcpServer(config);
-
   // ── MCP endpoint ─────────────────────────────────────────────────────────────
   // Clients send JSON-RPC requests via POST and optionally open an SSE stream via GET.
   // StreamableHTTPServerTransport handles both in a single handler.
@@ -45,6 +40,11 @@ async function main(): Promise<void> {
       const transport = new StreamableHTTPServerTransport({
         sessionIdGenerator: undefined, // stateless — no session persistence needed
       });
+
+      // Create a new server instance for each stateless HTTP request
+      // because an MCP server can only connect to a transport once.
+      const mcpServer = createMcpServer(config);
+
       await mcpServer.connect(transport);
       await transport.handleRequest(req, res, req.body);
     } catch (err) {
@@ -72,7 +72,6 @@ async function main(): Promise<void> {
   // Graceful shutdown
   process.on("SIGTERM", async () => {
     logger.info("Received SIGTERM, shutting down gracefully...");
-    await mcpServer.close();
     process.exit(0);
   });
 }
